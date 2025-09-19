@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Analytics & Reports - Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Reset */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #00796b, #004d40);
+            color: #e0f2f1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            background-color: #004d40;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 77, 64, 0.7);
+            user-select: none;
+            position: relative;
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #a5d6a7;
+            letter-spacing: 1.5px;
+        }
+        
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #e0f2f1aa;
+            color: #004d40;
+            font-size: 1.5rem;
+            font-weight: bolder;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: #004d40;
+            color: #e0f2f1aa;
+        }
+
+        main.container {
+            max-width: 1100px;
+            margin: 2rem auto 3rem;
+            padding: 2rem 2.5rem;
+            background: #ffffff22;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 77, 64, 0.6);
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            user-select: none;
+        }
+
+        h1.page-title {
+            font-weight: 700;
+            font-size: 2.2rem;
+            color: #a5d6a7;
+            letter-spacing: 1.5px;
+            text-align: center;
+            text-shadow: 0 0 8px rgba(0, 121, 107, 0.7);
+            margin: 0 0 1rem;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .chart-card {
+            background: #e0f2f1cc;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 121, 107, 0.3);
+            padding: 1.5rem 1.2rem;
+            color: #004d40;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            user-select: none;
+        }
+
+        .chart-card h2 {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #1b5e20;
+            text-align: center;
+            user-select: text;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: 280px !important;
+            user-select: none;
+        }
+
+        .export-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, #43a047, #1b5e20);
+            color: #e0f2f1;
+            border: none;
+            border-radius: 30px;
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(67, 160, 71, 0.7);
+            transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.15s ease;
+            user-select: none;
+            min-width: 140px;
+            text-align: center;
+        }
+
+        .export-btn:hover {
+            background: linear-gradient(135deg, #66bb6a, #2e7d32);
+            box-shadow: 0 8px 30px rgba(102, 187, 106, 0.9);
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 720px) {
+            main.container {
+                margin: 1.5rem 1rem 2rem;
+                padding: 1.5rem 1.5rem 2rem;
+                border-radius: 12px;
+            }
+
+            h1.page-title {
+                font-size: 1.8rem;
+            }
+
+            .export-btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">AI Sports Talent - Admin</div>
+    </nav>
+    <main class="container">
+        <a href="admin_dashboard.html" class="back-btn" aria-label="Back to dashboard">←</a>
+        <h1 class="page-title">Analytics & Reports</h1>
+
+        <div class="charts-grid">
+            <section class="chart-card" aria-label="Number of athletes per state">
+                <h2>Athletes per State</h2>
+                <canvas id="athletesPerStateChart" role="img"
+                    aria-label="Bar chart showing number of athletes per state"></canvas>
+            </section>
+
+            <section class="chart-card" aria-label="Average performance by test type">
+                <h2>Average Performance by Test</h2>
+                <canvas id="avgPerformanceChart" role="img"
+                    aria-label="Radar chart showing average performance by test type"></canvas>
+            </section>
+
+            <section class="chart-card" aria-label="Top performers trend over time">
+                <h2>Top Performers Trend</h2>
+                <canvas id="topPerformersTrendChart" role="img"
+                    aria-label="Line chart showing top performers trend over time"></canvas>
+            </section>
+        </div>
+
+        <div class="export-buttons" role="group" aria-label="Export reports">
+            <button class="export-btn" onclick="exportCSV()">Export CSV</button>
+            <button class="export-btn" onclick="exportExcel()">Export Excel</button>
+            <button class="export-btn" onclick="exportPDF()">Export PDF</button>
+        </div>
+    </main> <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- jsPDF CDN for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- SheetJS CDN for Excel export -->
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <script> // Sample data - replace with real data from backend or API const athletesPerStateData = { labels: ['Maharashtra', 'Karnataka', 'Tamil Nadu', 'Delhi', 'Uttar Pradesh', 'West Bengal', 'Gujarat'], datasets: [{ label: 'Number of Athletes', data: [120, 95, 80, 70, 65, 50, 45], backgroundColor: '#43a047', borderRadius: 6, borderSkipped: false, }] }; const avgPerformanceData = { labels: ['Vertical Jump (cm)', 'Sit-ups (count)', 'Shuttle Run (sec)', 'Endurance Run (min)'], datasets: [{ label: 'Average Performance', data: [82, 52, 13, 15], backgroundColor: 'rgba(67, 160, 71, 0.6)', borderColor: '#2e7d32', borderWidth: 2, fill: true, pointBackgroundColor: '#1b5e20', pointRadius: 6, pointHoverRadius: 8, }] }; const topPerformersTrendData = { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'], datasets: [{ label: 'Top Performers', data: [5, 7, 6, 8, 10, 9, 12], borderColor: '#43a047', backgroundColor: 'rgba(67, 160, 71, 0.3)', fill: true, tension: 0.3, pointRadius: 5, pointHoverRadius: 7, }] }; // Chart instances const athletesPerStateChart = new Chart( document.getElementById('athletesPerStateChart'), { type: 'bar', data: athletesPerStateData, options: { responsive: true, plugins: { legend: { display: false }, tooltip: { enabled: true } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 10 } } } } } ); const avgPerformanceChart = new Chart( document.getElementById('avgPerformanceChart'), { type: 'radar', data: avgPerformanceData, options: { responsive: true, scales: { r: { angleLines: { color: '#004d40' }, grid: { color: '#004d40' }, pointLabels: { color: '#004d40', font: { size: 14, weight: '600' } }, ticks: { beginAtZero: true, max: 20, stepSize: 5, color: '#004d40' } } }, plugins: { legend: { labels: { color: '#004d40', font: { weight: '700' } } } } } } ); const topPerformersTrendChart = new Chart( document.getElementById('topPerformersTrendChart'), { type: 'line', data: topPerformersTrendData, options: { responsive: true, plugins: { legend: { labels: { color: '#004d40', font: { weight: '700' } } }, tooltip: { enabled: true } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 2, color: '#004d40' } }, x: { ticks: { color: '#004d40' } } } } } ); // Export functions function exportCSV() { const rows = [ ['State', 'Number of Athletes'], ...athletesPerStateData.labels.map((label, i) => [label, athletesPerStateData.datasets[0].data[i]]) ]; let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n"); const encodedUri = encodeURI(csvContent); const link = document.createElement("a"); link.setAttribute("href", encodedUri); link.setAttribute("download", "athletes_per_state.csv"); document.body.appendChild(link); link.click(); document.body.removeChild(link); } function exportExcel() { const ws_data = [ ['State', 'Number of Athletes'], ...athletesPerStateData.labels.map((label, i) => [label, athletesPerStateData.datasets[0].data[i]]) ]; const ws = XLSX.utils.aoa_to_sheet(ws_data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "AthletesPerState"); XLSX.writeFile(wb, "athletes_per_state.xlsx"); } async function exportPDF() { const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.setFontSize(18); doc.setTextColor('#1b5e20'); doc.text("Athletes per State Report", 14, 22); doc.setFontSize(12); doc.setTextColor('#004d40'); const rows = athletesPerStateData.labels.map((label, i) => [label, athletesPerStateData.datasets[0].data[i].toString()]); doc.autoTable({ head: [['State', 'Number of Athletes']], body: rows, startY: 30, theme: 'grid', headStyles: { fillColor: '#43a047', textColor: '#e0f2f1', fontStyle: 'bold' }, styles: { textColor: '#004d40' } }); doc.save('athletes_per_state_report.pdf'); } </script>
+    <!-- jsPDF AutoTable plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+</body>
+
+</html>

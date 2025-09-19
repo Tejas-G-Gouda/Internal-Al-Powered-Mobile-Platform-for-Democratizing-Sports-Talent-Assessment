@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Settings & Security - AI Sports Talent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Reset */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #00796b, #004d40);
+            color: #e0f2f1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            user-select: none;
+        }
+
+        code nav {
+            background-color: #004d40;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 77, 64, 0.7);
+            user-select: none;
+            position: relative;
+        }
+        
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #e0f2f1aa;
+            color: #004d40;
+            font-size: 1.5rem;
+            font-weight: bolder;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: #004d40;
+            color: #e0f2f1aa;
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #a5d6a7;
+            letter-spacing: 1.5px;
+        }
+
+        main.container {
+            max-width: 700px;
+            margin: 2rem auto 3rem;
+            padding: 2rem 2.5rem;
+            background: #ffffff22;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 77, 64, 0.6);
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        h1.page-title {
+            font-weight: 700;
+            font-size: 2.2rem;
+            color: #a5d6a7;
+            letter-spacing: 1.5px;
+            text-align: center;
+            text-shadow: 0 0 8px rgba(0, 121, 107, 0.7);
+            margin: 0 0 1rem;
+            user-select: text;
+        }
+
+        section.settings-section {
+            background: #e0f2f1cc;
+            border-radius: 16px;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 6px 20px rgba(0, 121, 107, 0.3);
+            color: #004d40;
+            user-select: text;
+        }
+
+        section.settings-section h2 {
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #1b5e20;
+        }
+
+        form.settings-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        label {
+            font-weight: 600;
+            color: #1b5e20;
+            user-select: none;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            padding: 0.7rem 1rem;
+            border-radius: 20px;
+            border: 2px solid #43a047;
+            background: #ffffffdd;
+            color: #004d40;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #66bb6a;
+            box-shadow: 0 0 8px #66bb6aaa;
+        }
+
+        button.action-btn {
+            background: linear-gradient(135deg, #43a047, #1b5e20);
+            color: #e0f2f1;
+            border: none;
+            border-radius: 30px;
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(67, 160, 71, 0.7);
+            transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.15s ease;
+            user-select: none;
+            align-self: flex-start;
+            margin-top: 0.8rem;
+            min-width: 140px;
+            text-align: center;
+        }
+
+        button.action-btn:hover {
+            background: linear-gradient(135deg, #66bb6a, #2e7d32);
+            box-shadow: 0 8px 30px rgba(102, 187, 106, 0.9);
+            transform: scale(1.05);
+        }
+
+        /* Roles management placeholder */
+        .roles-info {
+            font-style: italic;
+            color: #2e7d32;
+            margin-top: 0.5rem;
+            user-select: text;
+        }
+
+        /* Logout button */
+        .logout-btn {
+            background: linear-gradient(135deg, #d32f2f, #9a2424);
+            margin-top: 2rem;
+            min-width: 160px;
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(135deg, #b71c1c, #7f1717);
+            box-shadow: 0 8px 30px rgba(183, 28, 28, 0.9);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            main.container {
+                margin: 1.5rem 1rem 2rem;
+                padding: 1.5rem 1.5rem 2rem;
+                border-radius: 12px;
+            }
+
+            h1.page-title {
+                font-size: 1.8rem;
+            }
+
+            button.action-btn {
+                min-width: 100%;
+                padding: 0.8rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">AI Sports Talent - Admin</div>
+    </nav>
+    <main class="container" role="main">
+        <a href="admin_dashboard.html" class="back-btn" aria-label="Back to dashboard">←</a>
+        <h1 class="page-title">Admin Settings & Security</h1>
+
+        <!-- Profile Section -->
+        <section class="settings-section" aria-labelledby="profileHeading">
+            <h2 id="profileHeading">Profile Information</h2>
+            <form id="profileForm" class="settings-form" onsubmit="return updateProfile(event)" novalidate>
+                <label for="adminName">Name</label>
+                <input type="text" id="adminName" name="adminName" placeholder="Enter your name" required
+                    aria-required="true" />
+
+                <label for="adminEmail">Email</label>
+                <input type="email" id="adminEmail" name="adminEmail" placeholder="Enter your email" required
+                    aria-required="true" />
+
+                <button type="submit" class="action-btn" aria-label="Update profile information">Update Profile</button>
+            </form>
+        </section>
+
+        <!-- Change Password Section -->
+        <section class="settings-section" aria-labelledby="passwordHeading">
+            <h2 id="passwordHeading">Change Password</h2>
+            <form id="passwordForm" class="settings-form" onsubmit="return changePassword(event)" novalidate>
+                <label for="currentPassword">Current Password</label>
+                <input type="password" id="currentPassword" name="currentPassword" placeholder="Enter current password"
+                    required aria-required="true" />
+
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password" required
+                    aria-required="true" minlength="6" />
+
+                <label for="confirmPassword">Confirm New Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password"
+                    required aria-required="true" minlength="6" />
+
+                <button type="submit" class="action-btn" aria-label="Change password">Change Password</button>
+            </form>
+        </section>
+
+        <!-- Add Admin Section -->
+        <section class="settings-section" aria-labelledby="addAdminHeading">
+            <h2 id="addAdminHeading">Add New Admin</h2>
+            <form id="addAdminForm" class="settings-form" onsubmit="return addAdmin(event)" novalidate>
+                <label for="newAdminName">Name</label>
+                <input type="text" id="newAdminName" name="newAdminName" placeholder="Enter admin name" required
+                    aria-required="true" />
+
+                <label for="newAdminEmail">Email</label>
+                <input type="email" id="newAdminEmail" name="newAdminEmail" placeholder="Enter admin email" required
+                    aria-required="true" />
+
+                <label for="newAdminPassword">Password</label>
+                <input type="password" id="newAdminPassword" name="newAdminPassword" placeholder="Enter password"
+                    required aria-required="true" minlength="6" />
+
+                <label for="newAdminRole">Role</label>
+                <select id="newAdminRole" name="newAdminRole" required aria-required="true">
+                    <option value="" disabled selected>Select role</option>
+                    <option value="superadmin">Super Admin</option>
+                    <option value="coach">Coach</option>
+                    <option value="moderator">Moderator</option>
+                </select>
+
+                <button type="submit" class="action-btn" aria-label="Add new admin">Add Admin</button>
+            </form>
+        </section>
+
+        <!-- Roles management placeholder -->
+        <section class="settings-section" aria-labelledby="rolesHeading">
+            <h2 id="rolesHeading">Manage Roles (Coming Soon)</h2>
+            <p class="roles-info">Feature to add coaches as sub-admins will be available in future updates.</p>
+        </section>
+
+        <!-- Logout Button -->
+        <button class="action-btn logout-btn" aria-label="Logout" onclick="logout()">Logout</button>
+    </main>
+    <script>
+    // Simulated current profile data (replace with real data fetch)
+    const currentProfile = {
+        name: "Admin User",
+        email: "admin@example.com"
+    };
+
+    // Populate profile form on load
+    window.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('adminName').value = currentProfile.name;
+        document.getElementById('adminEmail').value = currentProfile.email;
+    });
+
+    function updateProfile(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('adminName').value.trim();
+        const email = document.getElementById('adminEmail').value.trim();
+
+        if (!name || !email) {
+            alert('Please fill in all profile fields.');
+            return false;
+        }
+
+        // Basic email validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            alert('Please enter a valid email address.');
+            return false;
+        }
+
+        // TODO: Send updated profile to backend via API
+        alert('Profile updated successfully!');
+        return true;
+    }
+
+    function changePassword(event) {
+        event.preventDefault();
+
+        const currentPwd = document.getElementById('currentPassword').value;
+        const newPwd = document.getElementById('newPassword').value;
+        const confirmPwd = document.getElementById('confirmPassword').value;
+
+        if (!currentPwd || !newPwd || !confirmPwd) {
+            alert('Please fill in all password fields.');
+            return false;
+        }
+
+        if (newPwd.length < 6) {
+            alert('New password must be at least 6 characters long.');
+            return false;
+        }
+
+        if (newPwd !== confirmPwd) {
+            alert('New password and confirmation do not match.');
+            return false;
+        }
+
+        // TODO: Send password change request to backend via API
+        alert('Password changed successfully!');
+
+        // Clear password fields
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+
+        return true;
+    }
+
+    function addAdmin(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('newAdminName').value.trim();
+        const email = document.getElementById('newAdminEmail').value.trim();
+        const password = document.getElementById('newAdminPassword').value;
+        const role = document.getElementById('newAdminRole').value;
+
+        if (!name || !email || !password || !role) {
+            alert('Please fill in all fields to add a new admin.');
+            return false;
+        }
+
+        // Basic email validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            alert('Please enter a valid email address.');
+            return false;
+        }
+
+        if (password.length < 6) {
+            alert('Password must be at least 6 characters long.');
+            return false;
+        }
+
+        // TODO: Send new admin data to backend via API
+        /*
+        fetch('http://127.0.0.1:5000/admin/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password, role })
+        })
+        .then(res => {
+            if (!res.ok) throw new Error('Failed to add admin');
+            return res.json();
+        })
+        .then(data => {
+            alert('New admin added successfully!');
+            document.getElementById('addAdminForm').reset();
+        })
+        .catch(err => alert(err.message));
+        */
+
+        alert(`New admin added:\nName: ${name}\nEmail: ${email}\nRole: ${role}`);
+
+        // Clear form
+        document.getElementById('addAdminForm').reset();
+        return true;
+    }
+
+    function logout() {
+        // TODO: Implement logout logic (e.g., clear session, redirect)
+        alert('Logging out...');
+        window.location.href = 'index.html'; // Redirect to login page
+    }
+</script>
+</body>
+</html>

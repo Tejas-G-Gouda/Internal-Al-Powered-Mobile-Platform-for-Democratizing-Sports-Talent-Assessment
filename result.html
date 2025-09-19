@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Test Results - AI Sports Talent Assessment</title>
+    <link rel="stylesheet" href="/project-root/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        .results-container {
+            max-width: 700px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #00796b;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .result-item {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .insights {
+            background: #e0f2f1;
+            border-left: 5px solid #00796b;
+            padding: 1rem 1.5rem;
+            margin-top: 1.5rem;
+            font-style: italic;
+            color: #004d40;
+        }
+
+        .btn-center {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn-center .btn {
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-center .btn:hover {
+            background-color: #004d40;
+        }
+    </style>
+</head>
+
+<body>
+    <header>AI-Powered Sports Talent Assessment</header>
+
+    <nav>
+        <div class="logo">SportsTalent</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="news.html">News</a>
+            <a href="dashboard.html" class="btn">Dashboard</a>
+            <a href="results.html">Results</a>
+        </div>
+    </nav>
+
+    <main>
+        <h2>Your Test Results</h2>
+
+        <div class="results-container">
+            <div class="result-item">Speed: 8.5/10</div>
+            <div class="result-item">Agility: 9.0/10</div>
+            <div class="result-item">Endurance: 7.8/10</div>
+            <div class="result-item">Strength: 8.2/10</div>
+
+            <div class="insights">
+                Based on your performance, you have excellent agility and speed. Focus on endurance training to improve
+                overall stamina.
+            </div>
+
+            <!-- Example gamification progress bar -->
+            <h3>Overall Progress</h3>
+            <div class="progress-bar" aria-label="Overall progress">
+                <div class="progress-bar-fill" style="width: 82%;"></div>
+            </div>
+
+            <!-- Example badge -->
+            <p>Achievement: <span class="badge">Level 4</span></p>
+        </div>
+    </main>
+</body>
+
+</html>
+
+
+
+

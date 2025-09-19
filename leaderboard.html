@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Leaderboard - AI Sports Talent Assessment</title>
+    <link rel="stylesheet" href="/project-root/static/leaderboaard_style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='leaderboaard_style.css') }}">
+    <link rel="stylesheet" href="/project-root/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+
+</head>
+
+<body>
+    <header>
+        <h1>AI-Powered Sports Talent Assessment</h1>
+    </header>
+
+    <main class="leaderboard-container">
+        <a href="#" id="backBtn" class="back-btn" aria-label="Back to dashboard">←</a>
+        <div class="select-container">
+            <label for="leaderboardSelect" class="sr-only">Select Leaderboard</label>
+            <select id="leaderboardSelect" aria-label="Select leaderboard to view">
+                <option value="leaderboard.html" selected>Overall Leaderboard</option>
+                <option value="vertical_height_leaderboard.html">Vertical Jump Leaderboard</option>
+                <option value="situps_leaderboard.html">Sit-ups Leaderboard</option>
+                <option value="shuttal_run_leaderboard.html">Shuttle Run Leaderboard</option>
+                <option value="endurance_run_leaderboard.html">Endurance Run Leaderboard</option>
+            </select>
+        </div>
+
+        <!-- Overall Leaderboard -->
+        <section>
+            <h2 class="section-title">Overall Leaderboard</h2>
+            <table class="leaderboard-table" aria-label="Overall Leaderboard">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Athlete Name</th>
+                        <th>Total Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="rank gold" aria-label="1st place">🏆</td>
+                        <td>Tejas Gouda</td>
+
+                        <td>320</td>
+                    </tr>
+                    <tr>
+                        <td class="rank silver" aria-label="2nd place">🥈</td>
+                        <td>Rahul Rathod</td>
+                        <td>310</td>
+                    </tr>
+                    <tr>
+                        <td class="rank bronze" aria-label="3rd place">🥉</td>
+                        <td>Kishore patil </td>
+                        <td>305</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">4</td>
+                        <td>Suresh savnoor</td>
+                        <td>300</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">5</td>
+                        <td>Ashok chowdary</td>
+                        <td>295</td>
+                    </tr>
+                    <tr class="your-rank">
+                        <td class="rank">50</td>
+                        <td>Your Rank</td>
+                        <td>65</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Sports Authority of India</p>
+    </footer>
+    <script>
+        // Handle leaderboard dropdown (you already have this part)
+        const select = document.getElementById('leaderboardSelect');
+        select.addEventListener('change', () => {
+            const val = select.value;
+            if (val === "leaderboard.html") return;
+            window.location.href = val;
+        });
+
+        // Handle back button dynamically
+        const params = new URLSearchParams(window.location.search);
+        const role = params.get("role");
+
+        document.getElementById("backBtn").addEventListener("click", (e) => {
+            e.preventDefault();
+            if (role === "admin") {
+                window.location.href = "Admin_dashboard.html";
+            } else {
+                window.location.href = "Dashboard.html";
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fitness Test - AI Sports Talent Assessment</title>
+    <link rel="stylesheet" href="/project-root/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #e0f2f1;
+            
+        }
+
+        header {
+            background: linear-gradient(135deg, #00796b, #004d40);
+            padding: 2rem 1rem 1rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 1.5px;
+            color: #a5d6a7;
+            text-shadow: 0 0 8px rgba(0, 121, 107, 0.7);
+            user-select: none;
+        }
+
+        main.form-container {
+            background: linear-gradient(135deg, #00796b, #004d40);
+            /* translucent white */
+            max-width: 520px;
+            margin: 40px auto 40px;
+            padding: 2.5rem 3rem 3rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 77, 64, 0.6);
+            backdrop-filter: blur(10px);
+            color: #e0f2f1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-header h2 {
+            margin: 0;
+            flex-grow: 1;
+            color: #a5d6a7;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            text-align: center;
+            text-shadow: 0 0 6px rgba(0, 121, 107, 0.8);
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #049080;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            user-select: none;
+        }
+
+        .back-btn:hover {
+            background-color: #004d40;
+        }
+
+        #instructions {
+            font-size: 1.2rem;
+            color: #a5d6a7;
+            margin-bottom: 1rem;
+            min-height: 60px;
+            user-select: none;
+            text-align: center;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        button,
+        label[for="uploadVideo"] {
+            padding: 0.75rem 1.8rem;
+            font-size: 1rem;
+            border-radius: 30px;
+            border: 2px solid #00796b;
+            background-color: white;
+            color: #00796b;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.1s ease;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 130px;
+            box-shadow: 0 4px 12px rgba(0, 121, 107, 0.3);
+        }
+
+        button:active,
+        label[for="uploadVideo"]:active {
+            transform: scale(0.95);
+        }
+
+        button:hover,
+        label[for="uploadVideo"]:hover {
+            background-color: #21a696cc;
+            transform: translateY(-2px);
+            
+            color: white;
+            box-shadow: 0 6px 20px rgba(0, 121, 107, 0.6);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        #submitBtn {
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, #004d40, #00281a);
+            border-color: #004d40;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            padding: 0.85rem 2rem;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 77, 32, 0.8);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+            user-select: none;
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        #submitBtn:disabled {
+            background: #017864aa;
+            border-color: #02816caa;
+            cursor: not-allowed;
+            box-shadow: none;
+            color: #a5d6a7fa;
+        }
+
+        #submitBtn:not(:disabled):hover {
+            background-color: #00281a;
+            box-shadow: 0 8px 30px rgba(0, 40, 10, 0.9);
+            transform: scale(1.05);
+        }
+
+        video#videoPreview {
+            width: 100%;
+            max-height: 320px;
+            border-radius: 12px;
+            background: black;
+            box-shadow: 0 4px 15px rgba(0, 77, 64, 0.5);
+            user-select: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            main.form-container {
+                margin: 1.5rem 1rem 2rem;
+                padding: 1.5rem 1.5rem 2rem;
+                border-radius: 12px;
+            }
+
+            .profile-header h2 {
+                font-size: 1.5rem;
+            }
+
+            button,
+            label[for="uploadVideo"] {
+                min-width: 110px;
+                font-size: 0.95rem;
+                padding: 0.65rem 1.2rem;
+            }
+
+            #submitBtn {
+                max-width: 100%;
+                font-size: 1rem;
+                padding: 0.75rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+
+            button,
+            label[for="uploadVideo"] {
+                font-size: 0.9rem;
+                padding: 0.6rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>AI-Powered Sports Talent Assessment</h1>
+    </header>
+
+    <main class="form-container">
+        <div class="profile-header">
+            <a href="dashboard.html" class="back-btn" aria-label="Back to dashboard">←</a>
+            <h2 id="testTitle">Fitness Test</h2>
+        </div>
+
+        <p id="instructions">Loading instructions...</p>
+
+        <div class="btn-group">
+            <button id="startRecordBtn">Start Recording</button>
+            <button id="stopRecordBtn" disabled>Stop Recording</button>
+            <label for="uploadVideo">Upload Video</label>
+            <input type="file" id="uploadVideo" accept="video/*" />
+        </div>
+
+        <video id="videoPreview" controls></video>
+
+        <button id="submitBtn" disabled>Submit Video</button>
+    </main>
+
+    <script>
+        // Map test keys to titles and instructions
+        const testData = {
+            vertical_jump: {
+                title: "Vertical Jump Test",
+                instructions: "Record a video of your vertical jump. Stand next to a wall or marker and jump as high as you can."
+            },
+            situps: {
+                title: "Sit-ups Test",
+                instructions: "Record a video of you performing sit-ups for 1 minute. Make sure your full body is visible."
+            },
+            shuttle_run: {
+                title: "Shuttle Run Test",
+                instructions: "Record a video of your shuttle run test. Run back and forth between two points as fast as possible."
+            },
+            endurance_run: {
+                title: "Endurance Run Test",
+                instructions: "Record a video of your endurance run. Run continuously for the required distance."
+            }
+        };
+
+        // Get test from URL query parameter
+        function getTestFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('test') || 'vertical_jump';
+        }
+
+        const testKey = getTestFromURL();
+        const testInfo = testData[testKey] || testData['vertical_jump'];
+
+        // Set title and instructions
+        document.getElementById('testTitle').textContent = testInfo.title;
+        document.getElementById('instructions').textContent = testInfo.instructions;
+
+        // Video recording setup
+        let mediaRecorder;
+        let recordedChunks = [];
+        const videoPreview = document.getElementById('videoPreview');
+        const startRecordBtn = document.getElementById('startRecordBtn');
+        const stopRecordBtn = document.getElementById('stopRecordBtn');
+        const uploadVideoInput = document.getElementById('uploadVideo');
+        const submitBtn = document.getElementById('submitBtn');
+
+        startRecordBtn.onclick = async () => {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUser Media) {
+                alert('Camera API not supported in this browser.');
+                return;
+            }
+            try {
+                const stream = await navigator.mediaDevices.getUser Media({ video: true, audio: true });
+                videoPreview.srcObject = stream;
+                videoPreview.play();
+
+                recordedChunks = [];
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.ondataavailable = e => {
+                    if (e.data.size > 0) recordedChunks.push(e.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                    videoPreview.srcObject = null;
+                    videoPreview.src = URL.createObjectURL(blob);
+                    videoPreview.controls = true;
+                    submitBtn.disabled = false;
+                    // Stop all tracks to release camera
+                    stream.getTracks().forEach(track => track.stop());
+                };
+
+                mediaRecorder.start();
+                startRecordBtn.disabled = true;
+                stopRecordBtn.disabled = false;
+                submitBtn.disabled = true;
+            } catch (err) {
+                alert('Error accessing camera: ' + err.message);
+            }
+        };
+
+        stopRecordBtn.onclick = () => {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                startRecordBtn.disabled = false;
+                stopRecordBtn.disabled = true;
+            }
+        };
+
+        // Handle video upload
+        uploadVideoInput.onchange = () => {
+            const file = uploadVideoInput.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                videoPreview.srcObject = null;
+                videoPreview.src = url;
+                videoPreview.controls = true;
+                submitBtn.disabled = false;
+            }
+        };
+
+        // Submit button placeholder
+        submitBtn.onclick = () => {
+            alert('Video submitted successfully! (This is a placeholder)');
+            // TODO: Implement actual upload to backend
+        };
+    </script>
+</body>
+
+</html>

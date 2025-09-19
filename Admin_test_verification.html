@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Test Submissions & Verification - Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #00796b, #004d40);
+            color: #e0f2f1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            background-color: #004d40;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 77, 64, 0.7);
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #a5d6a7;
+            letter-spacing: 1.2px;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #e0f2f1aa;
+            color: #004d40;
+            font-size: 1.5rem;
+            font-weight: bolder;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: #004d40;
+            color: #e0f2f1aa;
+        }
+        main.container {
+            max-width: 1100px;
+            margin: 1.5rem auto;
+            padding: 1rem 1.5rem;
+            background: #ffffff22;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 77, 64, 0.6);
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+        }
+
+        h1.page-title {
+            font-weight: 700;
+            font-size: 2rem;
+            color: #a5d6a7;
+            text-align: center;
+            text-shadow: 0 0 6px rgba(0, 121, 107, 0.7);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Desktop table */
+        table.submissions-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #e0f2f1cc;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 121, 107, 0.3);
+        }
+
+        thead tr {
+            background: linear-gradient(135deg, #43a047, #1b5e20);
+            color: #fff;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        thead th {
+            padding: 0.75rem 1rem;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #a5d6a7aa;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #004d40;
+            background: #ffffffdd;
+        }
+
+        tbody td {
+            padding: 0.75rem 1rem;
+            vertical-align: middle;
+        }
+
+        video {
+            max-width: 180px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 121, 107, 0.5);
+        }
+
+        .ai-report {
+            font-size: 0.9rem;
+            color: #004d40;
+            background: #a5d6a7cc;
+            border-radius: 12px;
+            padding: 0.6rem 1rem;
+            max-width: 220px;
+            box-shadow: inset 0 0 8px rgba(0, 77, 64, 0.4);
+        }
+
+        .action-btn {
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.85rem;
+            margin: 0.3rem;
+            min-width: 90px;
+            text-align: center;
+            color: white;
+        }
+
+        .verify-btn {
+            background-color: #43a047;
+        }
+
+        .verify-btn:hover {
+            background-color: #2e7d32;
+        }
+
+        .flag-btn {
+            background-color: #d32f2f;
+        }
+
+        .flag-btn:hover {
+            background-color: #9a2424;
+        }
+
+        .download-btn {
+            background-color: #1e88e5;
+        }
+
+        .download-btn:hover {
+            background-color: #1565c0;
+        }
+
+        /* Mobile card layout */
+        .submission-card {
+            display: none;
+            background: #ffffffdd;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            color: #004d40;
+            box-shadow: 0 4px 12px rgba(0, 121, 107, 0.3);
+        }
+
+        .submission-card h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: #2e7d32;
+        }
+
+        .submission-card .ai-report {
+            max-width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        .submission-card video {
+            max-width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        .submission-card .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .submission-card .action-btn {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        /* Switch layouts */
+        @media (max-width: 900px) {
+            table.submissions-table {
+                display: none;
+            }
+
+            .submission-card {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">AI Sports Talent - Admin</div>
+    </nav>
+
+    <main class="container">
+        <a href="admin_dashboard.html" class="back-btn" aria-label="Back to dashboard">←</a>
+        <h1 class="page-title">Test Submissions & Verification</h1>
+
+        <!-- Desktop Table -->
+        <table class="submissions-table">
+            <thead>
+                <tr>
+                    <th>Athlete Name</th>
+                    <th>Video</th>
+                    <th>AI-Generated Report</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Siddarth kadat</td>
+                    <td><video controls preload="metadata">
+                            <source src="sample-video1.mp4" type="video/mp4">
+                        </video></td>
+                    <td class="ai-report">Vertical Jump: 85 cm<br>Sit-ups: 50 reps<br>Shuttle Run: 12.5 sec<br>Endurance
+                        Run: 15.2 min</td>
+                    <td id="status-1">Pending</td>
+                    <td>
+                        <button class="action-btn verify-btn" onclick="markVerified(1)">Verify</button>
+                        <button class="action-btn flag-btn" onclick="markFlagged(1)">Flag</button>
+                        <button class="action-btn download-btn"
+                            onclick="downloadVideo('sample-video1.mp4')">Download</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Priya Sharma</td>
+                    <td><video controls preload="metadata">
+                            <source src="sample-video2.mp4" type="video/mp4">
+                        </video></td>
+                    <td class="ai-report">Vertical Jump: 70 cm<br>Sit-ups: 45 reps<br>Shuttle Run: 13.1 sec<br>Endurance
+                        Run: 12.7 min</td>
+                    <td id="status-2">Pending</td>
+                    <td>
+                        <button class="action-btn verify-btn" onclick="markVerified(2)">Verify</button>
+                        <button class="action-btn flag-btn" onclick="markFlagged(2)">Flag</button>
+                        <button class="action-btn download-btn"
+                            onclick="downloadVideo('sample-video2.mp4')">Download</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Arjun Kumar</td>
+                    <td><video controls preload="metadata">
+                            <source src="sample-video3.mp4" type="video/mp4">
+                        </video></td>
+                    <td class="ai-report">Vertical Jump: 90 cm<br>Sit-ups: 60 reps<br>Shuttle Run: 11.9 sec<br>Endurance
+                        Run: 16.4 min</td>
+                    <td id="status-3">Pending</td>
+                    <td>
+                        <button class="action-btn verify-btn" onclick="markVerified(3)">Verify</button>
+                        <button class="action-btn flag-btn" onclick="markFlagged(3)">Flag</button>
+                        <button class="action-btn download-btn"
+                            onclick="downloadVideo('sample-video3.mp4')">Download</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Anita Verma</td>
+                    <td><video controls preload="metadata">
+                            <source src="sample-video4.mp4" type="video/mp4">
+                        </video></td>
+                    <td class="ai-report">Vertical Jump: 65 cm<br>Sit-ups: 40 reps<br>Shuttle Run: 14.2 sec<br>Endurance
+                        Run: 11.8 min</td>
+                    <td id="status-4">Pending</td>
+                    <td>
+                        <button class="action-btn verify-btn" onclick="markVerified(4)">Verify</button>
+                        <button class="action-btn flag-btn" onclick="markFlagged(4)">Flag</button>
+                        <button class="action-btn download-btn"
+                            onclick="downloadVideo('sample-video4.mp4')">Download</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Rahul Singh</td>
+                    <td><video controls preload="metadata">
+                            <source src="sample-video5.mp4" type="video/mp4">
+                        </video></td>
+                    <td class="ai-report">Vertical Jump: 78 cm<br>Sit-ups: 55 reps<br>Shuttle Run: 12.8 sec<br>Endurance
+                        Run: 14.3 min</td>
+                    <td id="status-5">Pending</td>
+                    <td>
+                        <button class="action-btn verify-btn" onclick="markVerified(5)">Verify</button>
+                        <button class="action-btn flag-btn" onclick="markFlagged(5)">Flag</button>
+                        <button class="action-btn download-btn"
+                            onclick="downloadVideo('sample-video5.mp4')">Download</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Mobile Cards -->
+        <div class="submission-card">
+            <h3>John Doe</h3>
+            <video controls preload="metadata">
+                <source src="sample-video1.mp4" type="video/mp4">
+            </video>
+            <div class="ai-report">Vertical Jump: 85 cm<br>Sit-ups: 50 reps<br>Shuttle Run: 12.5 sec<br>Endurance Run:
+                15.2 min</div>
+            <p><strong>Status:</strong> <span id="card-status-1">Pending</span></p>
+            <div class="actions">
+                <button class="action-btn verify-btn" onclick="markVerifiedCard(1)">Verify</button>
+                <button class="action-btn flag-btn" onclick="markFlaggedCard(1)">Flag</button>
+                <button class="action-btn download-btn" onclick="downloadVideo('sample-video1.mp4')">Download</button>
+            </div>
+        </div>
+
+        <div class="submission-card">
+            <h3>Priya Sharma</h3>
+            <video controls preload="metadata">
+                <source src="sample-video2.mp4" type="video/mp4">
+            </video>
+            <div class="ai-report">Vertical Jump: 70 cm<br>Sit-ups: 45 reps<br>Shuttle Run: 13.1 sec<br>Endurance Run:
+                12.7 min</div>
+            <p><strong>Status:</strong> <span id="card-status-2">Pending</span></p>
+            <div class="actions">
+                <button class="action-btn verify-btn" onclick="markVerifiedCard(2)">Verify</button>
+                <button class="action-btn flag-btn" onclick="markFlaggedCard(2)">Flag</button>
+                <button class="action-btn download-btn" onclick="downloadVideo('sample-video2.mp4')">Download</button>
+            </div>
+        </div>
+
+        <div class="submission-card">
+            <h3>Arjun Kumar</h3>
+            <video controls preload="metadata">
+                <source src="sample-video3.mp4" type="video/mp4">
+            </video>
+            <div class="ai-report">Vertical Jump: 90 cm<br>Sit-ups: 60 reps<br>Shuttle Run: 11.9 sec<br>Endurance Run:
+                16.4 min</div>
+            <p><strong>Status:</strong> <span id="card-status-3">Pending</span></p>
+            <div class="actions">
+                <button class="action-btn verify-btn" onclick="markVerifiedCard(3)">Verify</button>
+                <button class="action-btn flag-btn" onclick="markFlaggedCard(3)">Flag</button>
+                <button class="action-btn download-btn" onclick="downloadVideo('sample-video3.mp4')">Download</button>
+            </div>
+        </div>
+
+        <div class="submission-card">
+            <h3>Anita Verma</h3>
+            <video controls preload="metadata">
+                <source src="sample-video4.mp4" type="video/mp4">
+            </video>
+            <div class="ai-report">Vertical Jump: 65 cm<br>Sit-ups: 40 reps<br>Shuttle Run: 14.2 sec<br>Endurance Run:
+                11.8 min</div>
+            <p><strong>Status:</strong> <span id="card-status-4">Pending</span></p>
+            <div class="actions">
+                <button class="action-btn verify-btn" onclick="markVerifiedCard(4)">Verify</button>
+                <button class="action-btn flag-btn" onclick="markFlaggedCard(4)">Flag</button>
+                <button class="action-btn download-btn" onclick="downloadVideo('sample-video4.mp4')">Download</button>
+            </div>
+        </div>
+
+        <div class="submission-card">
+            <h3>Rahul Singh</h3>
+            <video controls preload="metadata">
+                <source src="sample-video5.mp4" type="video/mp4">
+            </video>
+            <div class="ai-report">Vertical Jump: 78 cm<br>Sit-ups: 55 reps<br>Shuttle Run: 12.8 sec<br>Endurance Run:
+                14.3 min</div>
+            <p><strong>Status:</strong> <span id="card-status-5">Pending</span></p>
+            <div class="actions">
+                <button class="action-btn verify-btn" onclick="markVerifiedCard(5)">Verify</button>
+                <button class="action-btn flag-btn" onclick="markFlaggedCard(5)">Flag</button>
+                <button class="action-btn download-btn" onclick="downloadVideo('sample-video5.mp4')">Download</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function markVerified(id) {
+            document.getElementById(`status-${id}`).textContent = 'Verified';
+            alert('Submission marked as Verified.');
+        }
+
+        function markFlagged(id) {
+            document.getElementById(`status-${id}`).textContent = 'Flagged for Cheating';
+            alert('Submission flagged for cheating.');
+        }
+
+        function markVerifiedCard(id) {
+            document.getElementById(`card-status-${id}`).textContent = 'Verified';
+            alert('Submission marked as Verified.');
+        }
+
+        function markFlaggedCard(id) {
+            document.getElementById(`card-status-${id}`).textContent = 'Flagged for Cheating';
+            alert('Submission flagged for cheating.');
+        }
+
+        function downloadVideo(filename) {
+            alert(`Downloading video: ${filename}`);
+        }
+    </script>
+</body>
+
+</html>

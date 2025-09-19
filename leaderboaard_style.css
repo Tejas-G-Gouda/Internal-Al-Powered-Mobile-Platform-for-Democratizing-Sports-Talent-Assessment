@@ -1,0 +1,204 @@
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            color: #e0f2f1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 2rem 1rem 1rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 1.5px;
+            color: #a5d6a7;
+            text-shadow: 0 0 8px rgba(0, 121, 107, 0.7);
+            user-select: none;
+        }
+        .sr-only{
+            margin-left: 15px;
+        }
+        .back-btn {
+            position: absolute;
+            left: 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e0f2f1aa;
+            color: #004d40;
+            font-size: 1.5rem;
+            font-weight: bolder;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: #004d40;
+            color: #e0f2f1aa;
+        }
+
+        main.leaderboard-container {
+            max-width: 900px;
+            margin: 2rem auto 3rem;
+            padding: 2rem 2.5rem;
+            background: linear-gradient(135deg, #00796b, #004d40);
+
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 77, 64, 0.6);
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* Select dropdown container */
+        .select-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        select#leaderboardSelect {
+            padding: 0.6rem 1rem;
+            font-size: 1rem;
+            border-radius: 30px;
+            border: 2px solid #00796b;
+            background: white;
+            color: #00796b;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 121, 107, 0.3);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            min-width: 220px;
+            user-select: none;
+        }
+
+        select#leaderboardSelect:hover,
+        select#leaderboardSelect:focus {
+            border-color: #43a047;
+            box-shadow: 0 6px 20px rgba(67, 160, 71, 0.6);
+            outline: none;
+        }
+
+        h2.section-title {
+            color: #a5d6a7;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 6px rgba(0, 121, 107, 0.8);
+            user-select: none;
+            border-bottom: 2px solid #43a047;
+            padding-bottom: 0.3rem;
+        }
+
+        table.leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #e0f2f1cc;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 121, 107, 0.3);
+            user-select: none;
+        }
+
+        thead tr {
+            background: linear-gradient(135deg, #43a047, #1b5e20);
+            color: #e0f2f1;
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        thead tr th {
+            padding: 0.75rem 1rem;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #a5d6a7aa;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #004d40;
+            background: #ffffffdd;
+            transition: background-color 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #c8e6c9cc;
+        }
+
+        tbody tr td {
+            padding: 0.75rem 1rem;
+        }
+
+        tbody tr td.rank {
+            width: 50px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        /* Medal colors */
+        .gold {
+            color: #ffd700;
+            font-size: 1.3rem;
+        }
+
+        .silver {
+            color: #c0c0c0;
+            font-size: 1.3rem;
+        }
+
+        .bronze {
+            color: #cd7f32;
+            font-size: 1.3rem;
+        }
+        .your-rank{
+            background-color:  #1cd4b62d;
+            border: 1px solid #026d5be8;
+        }
+        /* Responsive */
+        @media (max-width: 720px) {
+            main.leaderboard-container {
+                margin: 1.5rem 1rem 2rem;
+                padding: 1.5rem 1.5rem 2rem;
+                border-radius: 12px;
+            }
+
+            h2.section-title {
+                font-size: 1.5rem;
+            }
+
+            thead tr th,
+            tbody tr td {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            tbody tr td.rank {
+                width: 40px;
+                font-size: 1.1rem;
+            }
+
+            .select-container {
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+
+            thead tr th,
+            tbody tr td {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.5rem;
+            }
+        }
+    

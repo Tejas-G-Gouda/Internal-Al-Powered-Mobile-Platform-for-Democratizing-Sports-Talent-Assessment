@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard - AI Sports Talent Assessment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* Base & Reset */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            color: #e0f2f1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #00796b, #004d40);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 77, 64, 0.7);
+            user-select: none;
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #a5d6a7;
+            letter-spacing: 1.5px;
+        }
+
+        /* Hamburger button styles */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 28px;
+            height: 22px;
+            margin-right: 15px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background: #a5d6a7;
+            border-radius: 2px;
+            transition: all 0.3s linear;
+            position: relative;
+        }
+
+        /* Animate hamburger to X when active */
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 7px;
+            position: relative;
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: -7px;
+            position: relative;
+        }
+
+        .section-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.8rem;
+
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .section-buttons.visible {
+            max-height: 1000px;
+            margin-top: 1rem;
+        }
+
+        nav .logout-btn {
+            background: #43a047;
+            border: none;
+            padding: 0.5rem 1.1rem;
+            border-radius: 30px;
+            font-weight: 700;
+            color: white;
+            margin-right: -25px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 5px 20px rgba(67, 160, 71, 0.6);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            user-select: none;
+        }
+
+        nav .logout-btn:hover {
+            background-color: #2e7d32;
+            box-shadow: 0 8px 30px rgba(46, 125, 50, 0.8);
+        }
+
+        main.container {
+            max-width: 1100px;
+            margin: 2rem auto 3rem;
+            padding: 2rem 2.5rem;
+            background: linear-gradient(135deg, #00796b, #004d40);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 77, 64, 0.6);
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            user-select: none;
+        }
+
+        h1.page-title {
+            font-weight: 700;
+            font-size: 2.2rem;
+            color: #a5d6a7;
+            letter-spacing: 1.5px;
+            text-align: center;
+            text-shadow: 0 0 8px rgba(0, 121, 107, 0.7);
+            margin: 0 0 1rem;
+        }
+
+        /* Dashboard Overview Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .stat-card {
+            background: #e0f2f1cc;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 121, 107, 0.3);
+            padding: 1.8rem 1.5rem;
+            color: #004d40;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+            user-select: none;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 121, 107, 0.6);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            color: #43a047;
+            margin-bottom: 0.5rem;
+            user-select: text;
+        }
+
+        .section-btn {
+            background: linear-gradient(135deg, #43a047, #1b5e20);
+            color: #e0f2f1;
+            border: none;
+            border-radius: 30px;
+            padding: 1.2rem 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            user-select: none;
+            text-align: center;
+            min-height: 60px;
+        }
+
+        .section-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 720px) {
+            main.container {
+                margin: 1.5rem 1rem 2rem;
+                padding: 1.5rem 1.5rem 2rem;
+                border-radius: 12px;
+            }
+
+            h1.page-title {
+                font-size: 1.8rem;
+            }
+
+            .stat-card {
+                font-size: 1.1rem;
+            }
+
+            .stat-number {
+                font-size: 2.4rem;
+            }
+
+            .section-btn {
+                font-size: 1rem;
+                min-height: 55px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .section-btn {
+                font-size: 0.95rem;
+                min-height: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">AI Sports Talent - Admin</div>
+        <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false"
+            aria-controls="adminNavButtons">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <main class="container">
+        <h1 class="page-title">Dashboard Overview</h1>
+        <section id="adminNavButtons" class="section-buttons" aria-label="Admin dashboard navigation">
+
+            <button class="section-btn" onclick="navigateTo('atheletic_management.html')">
+                Athlete Management
+            </button>
+            <button class="section-btn" onclick="navigateTo('Admin_test_verification.html')">
+                Test Submissions & Verification
+            </button>
+            <button class="section-btn" onclick="navigateTo('leaderboard.html?role=admin')">
+                Leaderboards & Benchmarking
+            </button>
+            <button class="section-btn" onclick="navigateTo('admin news and announcement.html')">
+                News & Announcements Management
+            </button>
+            <button class="section-btn" onclick="navigateTo('admin analytics and report.html')">
+                Analytics & Reports
+            </button>
+            <button class="section-btn" onclick="navigateTo('admin_settings.html')">
+                Admin Settings & Security
+            </button>
+        </section>
+
+        <!-- Key Stats -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalAthletes">1250</div>
+                Total Registered Athletes
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pendingVerifications">37</div>
+                Pending Test Verifications
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="leaderboardAccess">4</div>
+                Leaderboards Accessed
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="recentSubmissions">18</div>
+                Recent Video Submissions
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Hamburger toggle
+        const hamburger = document.querySelector(".hamburger");
+        const navButtons = document.getElementById("adminNavButtons");
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navButtons.classList.toggle("visible");
+
+            const expanded = hamburger.getAttribute("aria-expanded") === "true";
+            hamburger.setAttribute("aria-expanded", !expanded);
+        });
+
+        // Navigate function
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+
+        // Logout function
+        function logout() {
+            alert("You have been logged out!");
+            window.location.href = "login.html"; // redirect to login page
+        }
+    </script>
+
+</body>
+</html>

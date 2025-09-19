@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>News & Announcements Management - Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #00796b, #004d40);
+            color: #e0f2f1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            background-color: #004d40;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 77, 64, 0.7);
+            user-select: none;
+            position: relative;
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #a5d6a7;
+            letter-spacing: 1.5px;
+        }
+        
+        .back-btn {
+            position: absolute;
+            left: 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #e0f2f1aa;
+            color: #004d40;
+            font-size: 1.5rem;
+            font-weight: bolder;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: #004d40;
+            color: #e0f2f1aa;
+        }
+
+        main.container {
+            max-width: 900px;
+            margin: 2rem auto 3rem;
+            padding: 2rem 2.5rem;
+            background: #ffffff22;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 77, 64, 0.6);
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            user-select: none;
+        }
+
+        h1.page-title {
+            font-weight: 700;
+            font-size: 2.2rem;
+            color: #a5d6a7;
+            letter-spacing: 1.5px;
+            text-align: center;
+            text-shadow: 0 0 8px rgba(0, 121, 107, 0.7);
+            margin: 0 0 1rem;
+        }
+
+        form.news-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        label {
+            font-weight: 600;
+            color: #a5d6a7;
+            user-select: none;
+        }
+
+        input[type="text"],
+        textarea {
+            padding: 0.8rem 1rem;
+            border-radius: 20px;
+            border: 2px solid #43a047;
+            background: #e0f2f1cc;
+            color: #004d40;
+            font-weight: 600;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #66bb6a;
+            box-shadow: 0 0 8px #66bb6aaa;
+        }
+
+        button.submit-btn {
+            align-self: flex-start;
+            background: linear-gradient(135deg, #43a047, #1b5e20);
+            color: #e0f2f1;
+            border: none;
+            border-radius: 30px;
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(67, 160, 71, 0.7);
+            transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.15s ease;
+            user-select: none;
+        }
+
+        button.submit-btn:hover {
+            background: linear-gradient(135deg, #66bb6a, #2e7d32);
+            box-shadow: 0 8px 30px rgba(102, 187, 106, 0.9);
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            main.container {
+                margin: 1.5rem 1rem 2rem;
+                padding: 1.5rem 1.5rem 2rem;
+                border-radius: 12px;
+            }
+
+            h1.page-title {
+                font-size: 1.8rem;
+            }
+
+            input[type="text"],
+            textarea {
+                font-size: 0.95rem;
+            }
+
+            button.submit-btn {
+                font-size: 1rem;
+                padding: 0.7rem 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">AI Sports Talent - Admin</div>
+    </nav>
+
+    <main class="container">
+        <a href="admin_dashboard.html" class="back-btn" aria-label="Back to dashboard">←</a>
+        <h1 class="page-title">News & Announcements Management</h1>
+
+        <form class="news-form" aria-label="Add news or training resource" onsubmit="return addNews(event)">
+            <label for="newsTitle">Title</label>
+            <input type="text" id="newsTitle" name="newsTitle" placeholder="Enter news or resource title" required />
+
+            <label for="newsContent">Content</label>
+            <textarea id="newsContent" name="newsContent" rows="5" placeholder="Enter detailed content"
+                required></textarea>
+
+            <button type="submit" class="submit-btn" aria-label="Add news or announcement">Upload News /
+                Resource</button>
+        </form>
+    </main>
+
+    <script>
+        async function addNews(event) {
+            event.preventDefault();
+
+            const titleInput = document.getElementById('newsTitle');
+            const contentInput = document.getElementById('newsContent');
+
+            const newEntry = {
+                title: titleInput.value.trim(),
+                content: contentInput.value.trim(),
+                date: new Date().toISOString()
+            };
+
+            if (!newEntry.title || !newEntry.content) {
+                alert('Please fill in both title and content.');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/admin/news', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newEntry)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to upload news');
+                }
+
+                alert('News/Announcement uploaded successfully.');
+
+                // Clear form
+                titleInput.value = '';
+                contentInput.value = '';
+
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+    </script>
+</body>
+
+</html>
